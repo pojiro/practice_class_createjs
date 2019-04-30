@@ -1,12 +1,11 @@
 class Stage {
     constructor(id){
-        this.stage = new createjs.Stage(id);
+        this._stage = new createjs.Stage(id);
         this.element = document.getElementById(id);
-        console.log(this.height);
     }
 
-    getStage(){
-        return this.stage;
+    get stage(){
+        return this._stage;
     }
 
     addChild(shape){
@@ -17,11 +16,11 @@ class Stage {
         this.stage.update();
     }
 
-    get width() {
+    get w() {
         return this.element.clientWidth;
     }
 
-    get height() {
+    get h() {
         return this.element.clientHeight;
     }
 }

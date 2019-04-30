@@ -7,40 +7,44 @@
     <script src="js/stage.js"></script>
     <script src="js/shape.js"></script>
     <script>
-        function fall(object, dy) {
-                object.y = object.y + dy;
+        function randomDouble(max) {
+            return Math.random()*max
         }
+        function randomInt(max) {
+            return Math.floor(Math.random()*max)
+        }
+
+        function randomShape(stageWidth, stageHeight){
+            let x = randomInt(stageWidth);
+            let y = randomInt(stageHeight);
+
+            switch (randomInt(3)) {
+                case 0:
+                    return new Circle(x, y, 20);
+                case 1:
+                    return new Star(x, y, 20);
+                case 2:
+                    return new Rectangle(x, y, 40, 40);
+                default:
+                    console.assert(false)
+            }
+        }
+
         function init() {
-            var stage = new Stage("demoCanvas"); // new createjs.Stage("demoCanvas");
-            var circle = new Star(100, 100, "DarkRed");
-            circle.addTo(stage);
+            var stage = new Stage("demoCanvas");
+            var shapes = Array(100).fill(0).map(elm => randomShape(stage.w, stage.h));
+
+            shapes.map(elm => elm.addTo(stage));
 
             setInterval(function () {
-                circle.move(0, 10);
-                stage.getStage().update();
-            }, 100);
-
-
-
-            // var shape = new createjs.Shape();
-            // shape.x = 100;
-            // shape.y = 100;
-
-            // shape.graphics.beginFill("Red");
-            // shape.graphics.drawCircle(0,0,50);
-            // var stage = new createjs.Stage("demoCanvas");
-            // stage.addChild(shape);
-            // stage.update();
-
-            // setInterval(function(){
-            //     shape.y += 10;
-            //     stage.update();
-            // }, 100);
+                shapes.map(elm => elm.move(0, 1)); // shapes.forEach(elm => elm.move(0, 1));
+                stage.update();
+            }, 10);
         }
         window.onload = init;
     </script>
 </head>
 <body>
-<canvas id="demoCanvas" width="500" height="300"></canvas>
+<canvas id="demoCanvas" width="500" height="500"></canvas>
 </body>
 </html>
